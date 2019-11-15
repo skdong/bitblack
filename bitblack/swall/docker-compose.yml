@@ -30,6 +30,7 @@ services:
     ports:
       - "8081"
       - "7077"
+    scale: 1
     links:
       - spark-master
       - mysql
