@@ -21,6 +21,11 @@ class Surname:
         return self.collection[random.randint(0, len(self.collection)-1)]
 
 
+SURNAME = None
+
+
 def get_surname():
-    surname = Surname()
-    return surname.get_random_surname()
+    global SURNAME
+    if not SURNAME:
+        SURNAME = Surname()
+    return SURNAME.get_random_surname()

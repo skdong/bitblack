@@ -33,3 +33,7 @@ distData.reduce(lambda a, b: a + b)
 
 val textFile = sc.textFile("file:///opt/spark-2.4.4-bin-hadoop2.7/README.md")
 ```
+
+spark 读取的json文件为jsonlines格式
+
+官方例子在examples\src\main\python\sql\datasource.py

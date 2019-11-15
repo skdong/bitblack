@@ -42,6 +42,11 @@ class Name:
         return name
 
 
+NAME = None
+
+
 def get_name():
-    name = Name()
-    return name.get_random_name()
+    global NAME
+    if not NAME:
+        NAME = Name()
+    return NAME.get_random_name()
