@@ -1,0 +1,3 @@
+FROM openjdk:8
+
+RUN wget https://github.com/smartloli/kafka-eagle-bin/archive/v1.4.0.tar.gz
