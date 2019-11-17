@@ -1,13 +1,17 @@
 import random
 
+default_len_min = 1
+default_len_limit = 2
+
 
 class Name:
     file_name = "statics/诗经.txt"
     end = "。"
     flags = ["。", "，", "！", "？", "：", "；"]
-    name_limit = 2
 
     def __init__(self):
+        self.len_min = default_len_min
+        self.len_limit = default_len_limit
         self.content = None
         self.collection = ""
         self.load()
@@ -37,7 +41,7 @@ class Name:
 
     def get_random_name(self):
         name = ""
-        for _ in range(random.randint(1, self.name_limit)):
+        for _ in range(random.randint(self.len_min, self.len_limit)):
             name += self.collection[random.randint(0, len(self.collection)-1)]
         return name
 
@@ -45,8 +49,10 @@ class Name:
 NAME = None
 
 
-def get_name():
+def get_name(len_min=1, len_limit=2):
     global NAME
     if not NAME:
         NAME = Name()
+    NAME.len_min = len_min
+    NAME.len_limit = len_limit
     return NAME.get_random_name()

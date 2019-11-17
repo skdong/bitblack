@@ -1,8 +1,8 @@
-from bitblack.swall.samples.name import surname
-from bitblack.swall.samples.name import name
+from bitblack.stone.name import surname
+from bitblack.stone.name import name
 
 
-def get_name():
+def get_random_name():
     return surname.get_surname() + name.get_name()
 
 
