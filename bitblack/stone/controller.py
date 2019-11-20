@@ -4,14 +4,26 @@ from pyspark.sql import SparkSession
 
 recode_file = "space/resulte.jsonl"
 
-spark = SparkSession.builder.appname("Get better name").getOrCreate()
 
-sc = spark.SparkContext
-nameDF = spark.read.json(recode_file)
+def show_better():
+    spark = SparkSession.builder.appName("Get better name").getOrCreate()
 
-nameDF.printSchema()
-nameDF.createOrReplaceTempView("name")
+    nameDF = spark.read.json(recode_file)
 
-spark.sql("select text, items[0].sentiment, items[0].positive_prob, items[0].negative_prob from name where items[0].sentiment==2  order by items[0].positive_prob desc").show(50)
+    nameDF.printSchema()
+    nameDF.createOrReplaceTempView("name")
 
-spark.close()
+    better = spark.sql(
+        "select text, items[0].sentiment, items[0].positive_prob, items[0].negative_prob from name where items[0].sentiment==2  order by items[0].positive_prob desc")
+
+    better.show(50)
+
+    spark.close()
+
+
+def main():
+    show_better()
+
+
+if __name__ == "__main__":
+    main()
