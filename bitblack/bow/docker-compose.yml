@@ -1,0 +1,61 @@
+version: "2.4"
+
+services:
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - metric
+  
+  telegraf:
+    image: telegraf
+    volumes:
+      - type: bind
+        source: ./telegraf
+        target: /etc/telegraf
+    networks:
+      - metric
+    links:
+      - redis
+      - influxdb
+  
+  influxdb-init:
+    image: influxdb
+    command: /init-influxdb.sh
+    networks:
+      - metric
+    volumes:
+      - type: volume
+        source: influxdb-data
+        target: /var/lib/influxdb
+    env_file:
+      - ./influxdb.env
+  
+  influxdb:
+    image: influxdb
+    volumes:
+      - type: volume
+        source: influxdb-data
+        target: /var/lib/influxdb
+    depends_on:
+      - influxdb-init
+    ports:
+      - "8086:8086"
+    networks:
+      - metric
+    
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - metric
+    links:
+      - influxdb
+
+networks:
+  metric:
+
+volumes:
+  influxdb-data:
