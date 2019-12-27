@@ -1,0 +1,5 @@
+version: "2.2"
+
+services:
+    etcd:
+        image: quay.io/coreos/etcd
