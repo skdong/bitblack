@@ -1,0 +1,11 @@
+version: "2.2"
+
+services:
+    etcd:
+        image: quay.io/coreos/etcd
+        ports:
+            - 2379:2379
+        command:
+            - "/usr/local/bin/etcd"
+            - "--listen-client-urls=http://0.0.0.0:2379"
+            - "--advertise-client-urls=http://0.0.0.0:2379"

@@ -29,6 +29,12 @@ scrape_configs:
   static_configs:
   - targets: ['localhost:8080']
 
+- job_name: etcd
+  static_configs:
+  - targets: ['etcd:2379']
+    labels:
+      instance: etcd
+
 - job_name: pushgateway
   static_configs:
   - targets: ['pushgateway:9091']

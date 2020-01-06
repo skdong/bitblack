@@ -3,6 +3,29 @@ version: "2.2"
 services:
 #    etcd:
 #        image: quay.io/coreos/etcd
+    redis:
+        image: redis
+        ports:
+            - 6379:6379
+        volumes:
+            - redis_data:/data
+    
+    jenkins:
+        image: jenkins/jenkins:lts
+        ports:
+            - 8080:8080
+            - 50000:50000
+        volumes:
+            - jenkins_home:/var/jenkins_home
+    etcd:
+        image: quay.io/coreos/etcd
+        ports:
+            - 2379:2379
+        command:
+            - "/usr/local/bin/etcd"
+            - "--listen-client-urls=http://0.0.0.0:2379"
+            - "--advertise-client-urls=http://0.0.0.0:2379"
+
     pushgateway:
         image: prom/pushgateway
         ports:
@@ -31,14 +54,20 @@ services:
         links:
             - alertmanager
             - pushgateway
+            - etcd
 
     grafana:
         image: grafana/grafana
         links:
             - prometheus
+        volumes:
+            - grafana_data:/var/lib/grafana
         ports:
             - 3000:3000
     
 
 volumes:
     prometheus:
+    grafana_data:
+    jenkins_home:
+    redis_data:

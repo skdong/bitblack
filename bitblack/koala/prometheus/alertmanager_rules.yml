@@ -10,3 +10,12 @@ groups:
       summary: "{{$labels.instance}}: has been down"
       description: "{{$labels.instance}}: job {{$labels.job}} has been down "
       value: "{{$value}}"
+   - alert: GoThreadsOver
+     expr: go_threads{instance="etcd", job="etcd"} > 2
+     for: 2m 
+     labels:
+      team: etcd
+     annotations:
+      summary: "{{$labels.instance}}: go thread over"
+      description: "{{$labels.instance}}: job {{$labels.job}} has been down "
+      value: "{{$value}}"

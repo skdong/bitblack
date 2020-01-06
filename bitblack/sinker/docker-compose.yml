@@ -1,0 +1,13 @@
+version: "2.2"
+services:
+    influxdb: 
+        image: quay.io/influxdb/influxdb:2.0.0-alpha
+        ports:
+            - 9999:9999
+    
+    telegraf:
+        image: quay.io/influxdb/telegraf-ci:1.13.5
+        volumes:
+            - 
+        links:
+            - influxdb
